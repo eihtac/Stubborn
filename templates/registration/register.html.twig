@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <div class="card w-25 my-5">
+        <h1 class="card-header fs-2">S'inscrire</h1>
+        
+        <div class="card-body">
+            {{ form_start(registrationForm) }}
+                <div class="mb-3">
+                    {{ form_label(registrationForm.name) }}
+                    {{ form_widget(registrationForm.name, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.name) }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form_label(registrationForm.email) }}
+                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.email) }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form_label(registrationForm.deliveryAddress) }}
+                    {{ form_widget(registrationForm.deliveryAddress, {'attr': {'class': 'form-control', 'rows': 1}}) }}
+                    {{ form_errors(registrationForm.deliveryAddress) }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form_label(registrationForm.plainPassword.first) }}
+                    {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.plainPassword.first) }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form_label(registrationForm.plainPassword.second) }}
+                    {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.plainPassword.second) }}
+                </div>                
+
+                <button type="submit" class="btn">Créer un compte</button>
+            {{ form_end(registrationForm) }}
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }} <br>
+                    <a href="{{ path('app_resend_email_confirmation') }}" class="btn mt-3">Renvoyer l'email</a>
+                </div>
+            {% endfor %}
+
+            {% if registrationForm.vars.errors|length > 0 %}
+                <div class="alert alert-danger">{{ form_errors(registrationForm) }}</div>
+            {% endif %}
+        </div>
+
+        <div class="card-footer">
+            <p>Déjà inscrit ?</p>
+            <a href="{{ path('app_login') }}" class="btn">Se Connecter</a>
+        </div>
+    </div>
+{% endblock %}

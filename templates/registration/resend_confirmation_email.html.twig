@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Renvoyer l'email de confirmation{% endblock %}
+
+{% block body %}
+    <div class="card w-25 my-5">
+        <h1 class="card-header fs-2">Renvoyer l'email de concfirmation</h1>
+
+        <div class="card-body">
+            <p>Pour recevoir à nouveau l'email de confirmation, indiquez votre adresse email.</p>
+
+            {{ form_start(resendForm) }}
+                {{ form_row(resendForm.email) }}
+                <button type="submit" class="btn my-3">Renvoyer</button>
+            {{ form_end(resendForm) }}
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+            
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

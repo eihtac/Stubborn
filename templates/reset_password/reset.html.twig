@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau mot de passe{% endblock %}
+
+{% block body %}
+    <div class="card w-25 my-5">
+        <h1 class="card-header fs-2">Définir un nouveau mot de passe</h1>
+        
+        <div class="card-body">
+            <p>Veuillez saisir votre nouveau mot de passe ci-dessous.</p>
+            
+            {{ form_start(resetForm) }}
+                {{ form_row(resetForm.plainPassword, {
+                    label: 'Nouveau mot de passe'
+                }) }}
+
+                <button class="btn my-3">Réinitialiser</button>
+            {{ form_end(resetForm) }}
+        </div>
+
+        {% for flash_error in app.flashes('reset_password_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+    </div>
+{% endblock %}

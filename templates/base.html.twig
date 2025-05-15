@@ -2,16 +2,75 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Vente de sweat-shirts de la marque Stubborn">
+        <title>{% block title %}Stubborn{% endblock %}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+
+    <body class="d-flex flex-column min-vh-100">
+        <header class="d-flex  justify-content-between">
+            <a href="{{ path('app_home') }}" class="d-flex flex-column text-secondary text-decoration-none mb-3">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo Stubborn" class="logo">
+                <span>Don’t compromise on your look</span>
+            </a>
+
+            {% if app.request.attributes.get('_route') == 'app_admin' %}
+                <h1>Back-Office</h1>
+            {% endif %}
+
+            <nav>
+                <ul class="d-flex list-unstyled mt-5">
+                    {% if app.request.attributes.get('_route') == 'app_admin' %}
+                        <li>
+                            <a href="{{ path('app_products') }}" class="{% if app.request.attributes.get('_route') == 'app_products' %}active {% else %} text-decoration-none {% endif %}">Boutique</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_logout') }}" class="{% if app.request.attributes.get('_route') == 'app_logout' %}active {% else %} text-decoration-none {% endif %}">Se déconnecter</a>
+                        </li>
+                    {% elseif app.user %}
+                        <li>
+                            <a href="{{ path('app_home') }}" class="{% if app.request.attributes.get('_route') == 'app_home' %}active {% else %} text-decoration-none {% endif %}">Accueil</a>
+                        </li>
+                        {# <li>
+                            <a href="{{ path('app_products') }}" class="{% if app.request.attributes.get('_route') == 'app_products' %}active {% else %} text-decoration-none {% endif %}">Boutique</a>
+                        </li> #}
+                        {# <li>
+                            <a href="{{ path('app_cart') }}" class="{% if app.request.attributes.get('_route') == 'app_cart' %}active {% else %} text-decoration-none {% endif %}">Panier</a>
+                        </li> #}
+                        <li>
+                            <a href="{{ path('app_logout') }}" class="{% if app.request.attributes.get('_route') == 'app_logout' %}active {% else %} text-decoration-none {% endif %}">Se déconnecter</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('app_home') }}" class="{% if app.request.attributes.get('_route') == 'app_home' %}active {% else %} text-decoration-none {% endif %}">Accueil</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_register') }}" class="{% if app.request.attributes.get('_route') == 'app_register' %}active {% else %} text-decoration-none {% endif %}">S'inscrire</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_login') }}" class="{% if app.request.attributes.get('_route') == 'app_login' %}active {% else %} text-decoration-none {% endif %}">Se connecter</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+
+        <main class="flex-fill d-flex justify-content-center">
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer class="d-flex py-3 m-3">
+            <small class="mx-3">
+                Nom de la société : Stubborn <br>
+                Adresse : Piccadilly Circus, London W1J 0DA, Royaume-Uni <br>
+                Adresse de contact : stubborn@blabla.com <br>
+                Slogan: Don't compromise on your look
+            </small>
+        </footer>
     </body>
 </html>

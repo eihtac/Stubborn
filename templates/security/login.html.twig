@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <div class="card w-25 my-5">
+        <h1 class="card-header fs-2">Se connecter</h1>
+
+        <div class="card-body">
+            <form method="post" action="{{ path('app_login') }}">
+                <div class="mb-3">
+                    <label for="username">Nom d'utilisateur :</label>
+                    <input type="text" id="username" name="_username" required class="form-control">
+                </div> 
+
+                <div class="mb-3">
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="_password" required class="form-control">
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <button type="submit" class="btn mb-3">Se connecter</button> 
+            </form>
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+            
+            {% for message in app.flashes('verify_email_error') %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                
+                {% if error.messageKey == 'Veuillez confirmer votre adresse email avant de vous connecter' %}
+                    <a href="{{ path('app_resend_email_confirmation') }}" class="btn mb-3">Renvoyer l'email</a><br>
+                {% endif %} 
+            {% endif %}
+              
+            <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>
+        </div>
+
+        <div class="card-footer">
+            <p>Pas encore inscrit ?</p>
+            <a href="{{ path('app_register') }}" class="btn">Créer un compte</a>
+        </div>
+    </div>
+{% endblock %}

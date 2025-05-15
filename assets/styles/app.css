@@ -1,3 +1,80 @@
 body {
-    background-color: skyblue;
+    background-color: #F4FAFF;
+    color: #4d4747;
+}
+
+header {
+    border-bottom: 1px solid #FDBDAF;
+}
+
+.logo {
+    width: 13rem;
+    margin-left: 3rem;
+    margin-top: 1rem;
+}
+
+span {
+    font-size: x-small;
+    margin-left: 7rem;
+}
+
+nav {
+    margin-right: 3rem;
+}
+
+li {
+    margin-right: 3rem;
+}
+
+a {
+    color: #4d4747;
+}
+
+a:hover {
+    color: #4d4747;
+}
+
+.active {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #d0090a;
+}
+
+footer {
+    border: 1px solid #FDBDAF;
+}
+
+.card {
+    background-color: #fceeed94;
+}
+
+.card h1 {
+    font-size: medium;
+}
+
+.card-header {
+    border-bottom: 1px solid #FDBDAF;
+}
+
+.card-footer {
+    border-top: 1px solid #FDBDAF;
+}
+
+input.form-control, textarea.form-control {
+    background-color: #f9e6e567;
+}
+
+.btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #d0090a;
+    color: white;
+}
+
+.visible-link {
+    text-decoration: underline;
+    color: #d0090a;
 }
