@@ -1,0 +1,112 @@
+[
+    {
+        "name":"Blackbelt",
+        "price": 29.9,
+        "highlight": true,
+        "imageFileName": "blackbelt.jpeg",
+        "stockXS": 2,
+        "stockS": 2,
+        "stockM": 2,
+        "stockL": 2,
+        "stockXL": 2
+    },
+    {
+        "name":"BlueBelt",
+        "price": 29.9,
+        "highlight": false,
+        "imageFileName": "bluebelt.jpeg",
+        "stockXS": 2,
+        "stockS": 2,
+        "stockM": 2,
+        "stockL": 2,
+        "stockXL": 2
+    },
+    {
+        "name":"Street",
+        "price": 34.5,
+        "highlight": false,
+        "imageFileName": "street.jpeg",
+        "stockXS": 2,
+        "stockS": 2,
+        "stockM": 2,
+        "stockL": 2,
+        "stockXL": 2
+    },
+    {
+        "name":"Pokeball",
+        "price": 45,
+        "highlight": true,
+        "imageFileName": "pokeball.jpeg",
+        "stockXS": 2,
+        "stockS": 2,
+        "stockM": 2,
+        "stockL": 2,
+        "stockXL": 2
+    },
+    {
+        "name":"PinkLady",
+        "price": 29.9,
+        "highlight": false,
+        "imageFileName": "pinklady.jpeg",
+        "stockXS": 2,
+        "stockS": 2,
+        "stockM": 2,
+        "stockL": 2,
+        "stockXL": 2
+    },
+    {
+        "name":"Snow",
+        "price": 32,
+        "highlight": false,
+        "imageFileName": "snow.jpeg",
+        "stockXS": 2,
+        "stockS": 2,
+        "stockM": 2,
+        "stockL": 2,
+        "stockXL": 2
+    },
+    {
+        "name":"Greyback",
+        "price": 28.5,
+        "highlight": false,
+        "imageFileName": "greyback.jpeg",
+        "stockXS": 2,
+        "stockS": 2,
+        "stockM": 2,
+        "stockL": 2,
+        "stockXL": 2
+    },
+    {
+        "name":"BlueCloud",
+        "price": 45,
+        "highlight": false,
+        "imageFileName": "bluecloud.jpeg",
+        "stockXS": 2,
+        "stockS": 2,
+        "stockM": 2,
+        "stockL": 2,
+        "stockXL": 2
+    },
+    {
+        "name":"BornInUsa",
+        "price": 59.9,
+        "highlight": true,
+        "imageFileName": "borninusa.jpeg",
+        "stockXS": 2,
+        "stockS": 2,
+        "stockM": 2,
+        "stockL": 2,
+        "stockXL": 2
+    },
+    {
+        "name":"GreenSchool",
+        "price": 42.2,
+        "highlight": false,
+        "imageFileName": "greenschool.jpeg",
+        "stockXS": 2,
+        "stockS": 2,
+        "stockM": 2,
+        "stockL": 2,
+        "stockXL": 2
+    }
+]
