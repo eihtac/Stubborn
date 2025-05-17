@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sweat-shirt {{ product.name }}{% endblock %}
+
+{% block body %}
+    <h1 class="sr-only">Sweat-shirt {{ product.name }}</h1>
+
+    <div class="card w-50 d-flex flex-row p-4 m-4">
+        <div class="bg-white d-flex justify-content-center align-items-center w-50 rounded">
+            <img src="{{ asset('images/' ~ product.imageFileName) }}" alt="sweat-shirt {{ product.name }}" class="mx-5">
+        </div>
+
+        <div class="w-50 d-flex justify-content-around">
+            <div>
+                <h2 class="my-5">{{ product.name }}</h2>
+                <span data-price="{{ product.price }}">{{ product.price | number_format(2, ',', ' ') }} €</span>
+            </div>
+            
+            <form method="post" class="d-flex flex-column">
+                <label for="size" class="mx-auto">Taille</label>
+                <select name="size" id="size" size="5" required>
+                    <option value="XS">XS</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="Xl">XL</option>
+                </select>
+                <button class="btn mt-3 mr-5">Ajouter au panier</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

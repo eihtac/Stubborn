@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produits{% endblock %}
+
+{% block body %}
+    <div class="container p-5">
+        <h1 class="sr-only">Produits</h1>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card p-3 m-3 h-75">
+                    <form method="get" class="p-4">
+                        <label for="range">Fourchette de prix</label><br>
+                    
+                        <select name="range" id="range" size="4" onchange="this.form.submit()" class="w-50">
+                            <option value="">  </option>
+                            <option value="10-29" {{ selectedRange == '10-29' ? 'selected' : '' }}>10 à 29 €</option>
+                            <option value="30-35" {{ selectedRange == '30-35' ? 'selected' : '' }}>30 à 35 €</option>
+                            <option value="35-50" {{ selectedRange == '35-50' ? 'selected' : '' }}>35 à 50 €</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+
+            {% for product in products %}
+                <div class=" col-md-4">
+                    <div class="card p-3 m-3">
+                        <img src="{{ asset('images/' ~ product.imageFileName) }}" alt="sweat-shirt {{ product.name }}">
+                    
+                        <div class="mt-5">
+                            <h2>{{ product.name }}</h2>
+                        
+                            <div class="d-flex justify-content-between">
+                                <span data-price="{{ product.price }}">{{ product.price | number_format(2, ',', ' ') }} €</span>
+                            
+                                <a href="{{ path('app_product', {id: product.id}) }}" class="btn">Voir</a>
+                            </div>
+                        </div>        
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

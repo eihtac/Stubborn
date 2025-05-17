@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <div class="container p-5">
+        <h1 class="sr-only">Boutique Stubborn - Accueil</h1>
+
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4">
+                    <div class="card p-3 m-3">
+                        <img src="{{ asset('images/' ~ product.imageFileName) }}" alt="sweat-shirt {{ product.name }}">
+                    
+                        <div class="mt-5">
+                            <h2>{{ product.name }}</h2>
+                        
+                            <div class="d-flex justify-content-between">
+                                <span data-price="{{ product.price }}">{{ product.price | number_format(2, ',', ' ') }} €</span>
+                            
+                                {% if app.user %}
+                                    <a href="{{ path('app_product', {id: product.id}) }}" class="btn">Voir</a>
+                                {% endif %}
+                            </div>
+                        </div>        
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
