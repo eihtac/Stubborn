@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+{% block body %}
+    <div class="p-5 w-75">
+        <h1 class="sr-only">Panier</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {% if cart and cart.items|length > 0 %}
+            {% for item in cart.items %}
+                <div class="card p-3 m-3 mx-auto">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{ asset('images/' ~ item.product.imageFileName) }}" alt="sweat-shirt {{ item.product.name }}">
+                        </div>
+
+                        <div class="col-3">
+                            <h2>{{ item.product.name }}</h2>
+                        </div>
+
+                        <div class="col-3">
+                            <span>{{ item.product.price | number_format(2, ',', ' ') }} €</span>
+                        </div>
+
+                        <div class="col-3 d-flex flex-column justify-content-between">
+                            {{ item.size }}
+                            <form method="post" action="{{ path('app_cart_remove_item', {'id': item.id}) }}">
+                                <button class="btn">Retirer du panier</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="d-flex justify-content-end">
+                <div class="mr-3">
+                    <span>Total : {{ cart.total | number_format(2, ',', ' ') }} €</span>
+                </div>
+
+                <div class="d-flex flex-column mr-3">
+                    <button id="checkout-button" class="btn mb-3" data-stripe-key="{{ stripe_public_key }}">Finaliser ma commande</button>
+                    <a href="{{ path('app_products') }}" class="btn">Continuer mes achats</a>
+                </div>     
+            </div>
+        {% else %}
+            <p>Votre panier est vide</p>
+            <a href="{{ path('app_products') }}" class="btn">Commencer mes achats</a>
+        {% endif %}
+    </div>
+{% endblock %}
