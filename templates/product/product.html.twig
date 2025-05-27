@@ -18,12 +18,10 @@
             
             <form method="post" class="d-flex flex-column">
                 <label for="size" class="mx-auto">Taille</label>
-                <select name="size" id="size" size="5" required>
-                    <option value="XS">XS</option>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                    <option value="Xl">XL</option>
+                <select name="size" id="size" size="{{ availableSizes|length }}" required>
+                    {% for size in availableSizes %}
+                        <option value="{{ size }}">{{ size }}</option>
+                    {% endfor %}
                 </select>
                 <button class="btn mt-3 mr-5">Ajouter au panier</button>
             </form>

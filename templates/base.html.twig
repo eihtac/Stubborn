@@ -9,6 +9,7 @@
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <script src="https://js.stripe.com/v3/"></script>
         {% endblock %}
     </head>
 
@@ -24,7 +25,7 @@
             {% endif %}
 
             <nav>
-                <ul class="d-flex list-unstyled mt-5">
+                <ul class="d-flex list-unstyled mt-4">
                     {% if app.request.attributes.get('_route') == 'app_admin' %}
                         <li>
                             <a href="{{ path('app_products') }}" class="{% if app.request.attributes.get('_route') == 'app_products' %}active {% else %} text-decoration-none {% endif %}">Boutique</a>
@@ -39,9 +40,9 @@
                         <li>
                             <a href="{{ path('app_products') }}" class="{% if app.request.attributes.get('_route') == 'app_products' %}active {% else %} text-decoration-none {% endif %}">Boutique</a>
                         </li>
-                        {# <li>
+                        <li>
                             <a href="{{ path('app_cart') }}" class="{% if app.request.attributes.get('_route') == 'app_cart' %}active {% else %} text-decoration-none {% endif %}">Panier</a>
-                        </li> #}
+                        </li>
                         <li>
                             <a href="{{ path('app_logout') }}" class="{% if app.request.attributes.get('_route') == 'app_logout' %}active {% else %} text-decoration-none {% endif %}">Se déconnecter</a>
                         </li>
@@ -72,5 +73,32 @@
                 Slogan: Don't compromise on your look
             </small>
         </footer>
+
+        <script type="module">
+            document.addEventListener('turbo:load', () => {
+                const button = document.getElementById("checkout-button");
+                if (!button || typeof Stripe !== "function") return;
+
+                const stripe = Stripe(button.dataset.stripeKey);
+                button.addEventListener("click", () => {
+                    fetch("/checkout", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-Requested-With": "XMLHttpRequest"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(session => {
+                        if (session.id) {
+                            stripe.redirectToCheckout({ sessionId: session.id });
+                        } else {
+                            alert("Erreur : " + session.error);
+                        }
+                    })
+                    .catch(() => alert("Erreur réseau Stripe"));
+                });
+            });
+        </script>
     </body>
 </html>
