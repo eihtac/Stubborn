@@ -18,7 +18,7 @@ class CartItem
     private Cart $cart;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private Product $product;
 
     #[ORM\Column(length: 2)]
