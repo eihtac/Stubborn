@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250513165500 extends AbstractMigration
+final class Version20250529145307 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,10 +21,10 @@ final class Version20250513165500 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE reset_password_request DROP FOREIGN KEY FK_7CE748AA76ED395
+            ALTER TABLE cart_item DROP FOREIGN KEY FK_F0FE25274584665A
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE reset_password_request ADD CONSTRAINT FK_7CE748AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+            ALTER TABLE cart_item ADD CONSTRAINT FK_F0FE25274584665A FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE
         SQL);
     }
 
@@ -32,10 +32,10 @@ final class Version20250513165500 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE reset_password_request DROP FOREIGN KEY FK_7CE748AA76ED395
+            ALTER TABLE cart_item DROP FOREIGN KEY FK_F0FE25274584665A
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE reset_password_request ADD CONSTRAINT FK_7CE748AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)
+            ALTER TABLE cart_item ADD CONSTRAINT FK_F0FE25274584665A FOREIGN KEY (product_id) REFERENCES product (id)
         SQL);
     }
 }

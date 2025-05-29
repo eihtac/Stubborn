@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back-Office{% endblock %}
+
+{% block body %}
+    <div class="p-5 w-75">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+
+        {{ form_start(formAdd, {'attr': {'enctype': 'multipart/form-data'}}) }}
+            <div class="card p-3 m-3">
+                <div class="row">
+                    <div class="col-2 d-flex flex-column align-items-center">
+                        <label for="product_image" class="w-100">
+                            <div class="w-100 d-flex justify-content-center align-items-center add-image">
+                                Ajouter une photo
+                            </div>
+                        </label>
+                        {{ form_widget(formAdd.imageFile, { 'id': 'product_image', 'attr': {'class': 'd-none'} }) }}
+                    </div>
+
+                    <div class="col-10">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                {{ form_label(formAdd.name) }}
+                                {{ form_widget(formAdd.name, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group col">
+                                {{ form_label(formAdd.price) }}
+                                {{ form_widget(formAdd.price, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group col">
+                                {{ form_label(formAdd.stockXS) }}
+                                {{ form_widget(formAdd.stockXS, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group col">
+                                {{ form_label(formAdd.stockS) }}
+                                {{ form_widget(formAdd.stockS, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group col">
+                                {{ form_label(formAdd.stockM) }}
+                                {{ form_widget(formAdd.stockM, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group col">
+                                {{ form_label(formAdd.stockL) }}
+                                {{ form_widget(formAdd.stockL, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group col">
+                                {{ form_label(formAdd.stockXL) }}
+                                {{ form_widget(formAdd.stockXL, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-5">
+                            {{ form_row(formAdd.highlight, { 'attr': { 'class': 'ml-3' }, 'label_attr': { 'class': 'ml-2'} }) }}
+                            <button type="submit" class="btn px-5 mr-5">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{ form_end(formAdd) }}
+
+        {% for product in products %}
+            <div class="card p-3 m-3">
+                {{ form_start(formEdit[product.id], {'action': path('admin_product_edit', {id: product.id }), 'attr': {'enctype': 'multipart/form-data'} }) }}        
+                    <div class="row">
+                        <div class="col-2 d-flex flex-column align-items-center">
+                            <label for="product_image_{{ product.id }}" class="w-100">
+                                <img src="{{ asset('images/' ~ product.imageFileName) }}" alt="Image sweat-shirt {{ product.name }}" class="add-image w-100">
+                            </label>
+                            {{ form_widget(formEdit[product.id].imageFile, { 'id': 'product_image_' ~ product.id, 'attr': {'class': 'd-none'} }) }}
+                        </div>
+
+                        <div class="col-10">
+                            <div class="form-row">
+                                {% for field in ['name', 'price', 'stockXS', 'stockS', 'stockM', 'stockL', 'stockXL'] %}
+                                    <div class="form-group col">
+                                        {{ form_label(attribute(formEdit[product.id], field)) }}
+                                        {{ form_widget(attribute(formEdit[product.id], field), {'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-5">
+                                {{ form_row(formEdit[product.id].highlight, { 'attr': { 'class': 'ml-3' }, 'label_attr': { 'class': 'ml-2'} }) }}
+                                <div>
+                                    <button type="submit" name="delete" class="btn px-5 mr-3" onclick="return confirm('Supprimer ce produit ?');">Supprimer</button>
+                                    <button type="submit" name="edit" class="btn px-5 mr-5">Modifier</button>
+                                </div> 
+                            </div>                        
+                        </div>
+                    </div>
+                {{ form_end(formEdit[product.id]) }}
+            </div> 
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -78,3 +78,9 @@ input.form-control, textarea.form-control {
     text-decoration: underline;
     color: #d0090a;
 }
+
+.add-image {
+    cursor: pointer;
+    border: 1px solid #FDBDAF;
+    min-height: 20vh;
+}

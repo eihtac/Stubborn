@@ -21,19 +21,22 @@
             </a>
 
             {% if app.request.attributes.get('_route') == 'app_admin' %}
-                <h1>Back-Office</h1>
+                <h1 class="mt-5">Back-Office</h1>
             {% endif %}
 
             <nav>
                 <ul class="d-flex list-unstyled mt-4">
-                    {% if app.request.attributes.get('_route') == 'app_admin' %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{ path('app_admin') }}" class="{% if app.request.attributes.get('_route') == 'app_admin' %}active {% else %} text-decoration-none {% endif %}">Back-Office</a>
+                        </li>
                         <li>
                             <a href="{{ path('app_products') }}" class="{% if app.request.attributes.get('_route') == 'app_products' %}active {% else %} text-decoration-none {% endif %}">Boutique</a>
                         </li>
                         <li>
                             <a href="{{ path('app_logout') }}" class="{% if app.request.attributes.get('_route') == 'app_logout' %}active {% else %} text-decoration-none {% endif %}">Se déconnecter</a>
                         </li>
-                    {% elseif app.user %}
+                    {% elseif is_granted('ROLE_CLIENT') %}
                         <li>
                             <a href="{{ path('app_home') }}" class="{% if app.request.attributes.get('_route') == 'app_home' %}active {% else %} text-decoration-none {% endif %}">Accueil</a>
                         </li>
