@@ -3,15 +3,13 @@
 namespace App\Controller;
 
 use App\Repository\CartRepository;
+use App\Service\StripeService;
 use Doctrine\ORM\EntityManagerInterface;
-use Stripe\Stripe;
-use Stripe\Checkout\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class CartController extends AbstractController
 {
@@ -45,9 +43,8 @@ final class CartController extends AbstractController
     }
 
     #[Route('/checkout', name: 'app_checkout', methods: ['POST'])]
-    public function checkout(CartRepository $cartRepository, UrlGeneratorInterface $urlGenerator): JsonResponse
+    public function checkout(CartRepository $cartRepository, StripeService $stripeService): JsonResponse
     {
-        Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
         $user = $this->getUser();
 
         $cart = $cartRepository->findOneBy(['user' => $user, 'status' => 'cart']);
@@ -56,35 +53,9 @@ final class CartController extends AbstractController
             return $this->json(['error' => 'Panier vide'], 400);
         }
 
-        $lineItems = [];
-        foreach ($cart->getItems() as $item) {
-            $lineItems[] = [
-                'price_data' => [
-                    'currency' => 'eur',
-                    'unit_amount' => $item->getProduct()->getPrice() * 100,
-                    'product_data' => [
-                        'name' => $item->getProduct()->getName() . ' - ' . $item->getSize(),
-                    ],
-                ],
-                'quantity' => 1,
-            ];
-        }
+        $sessionId = $stripeService->createCheckoutSession($cart);
 
-        $successUrl = $urlGenerator->generate('app_payment_success', [
-            'cartId' => $cart->getId()
-        ], UrlGeneratorInterface::ABSOLUTE_URL);
-
-        $cancelUrl = $urlGenerator->generate('app_cart', [], UrlGeneratorInterface::ABSOLUTE_URL);
-
-        $session = Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => $lineItems,
-            'mode' => 'payment',
-            'success_url' => $successUrl,
-            'cancel_url' => $cancelUrl,
-        ]);
-
-        return $this->json(['id' => $session->id]);
+        return $this->json(['id' => $sessionId]);
     }
 
     #[Route('/payment-success', name: 'app_payment_success')]
